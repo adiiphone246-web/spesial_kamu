@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Kamu ❤️</title>
+    <style>
+        /* CSS: Bagian untuk mempercantik tampilan */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Dancing+Script:wght@700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffe6e6;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden; /* Mencegah scrollbar muncul */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Tampilan Awal (Tombol) */
+        #start-screen {
+            transition: opacity 1s ease;
+        }
+
+        .btn-klik {
+            background-color: #ff4d6d;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Tampilan Kejutan (Hidden di awal) */
+        #surprise-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 2s ease;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 90%;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #d6336c;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Foto Pacar */
+        .photo-container {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #ff4d6d;
+            margin: 20px auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Animasi */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Hati yang berterbangan */
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            animation: float 4s linear infinite;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Audio (Opsional: Ganti src dengan link lagu favorit dia) -->
+    <!-- Saya menggunakan link lagu instrumen romantis gratis -->
+    <audio id="bg-music" loop>
+        <source src="Feast - Nina (Lirik).mp4" type="audio/mpeg">
+    </audio>
+
+    <!-- Layar 1: Tombol -->
+    <div id="start-screen">
+        <h2 style="color: #d6336c;">Ada sesuatu buat kamu...</h2>
+        <button class="btn-klik" onclick="bukaKejutan()">Klik Aku ❤️</button>
+    </div>
+
+    <!-- Layar 2: Kejutan -->
+    <div id="surprise-screen">
+        <!-- GANTI FOTO DI SINI: Ubah 'https://via.placeholder.com/200' dengan link foto pacar kamu -->
+        <div class="photo-container">
+            <img src="Naira.jpeg" alt="Foto Kita">
+        </div>
+        
+        <!-- GANTI PESAN DI SINI -->
+        <h1>Happy Anniversary, Sayang!</h1>
+        <p>
+            Terima kasih sudah jadi orang terbaik dalam hidupku.<br>
+            Maaf kalau aku sering bikin kesel, tapi aku janji akan terus berusaha.<br>
+            I Love You More Than You Know! ❤️
+        </p>
+        <p style="font-size: 0.9rem; color: #888;">(Jangan lupa senyum ya!)</p>
+    </div>
+
+    <script>
+        // JAVASCRIPT: Logika untuk animasi
+        function bukaKejutan() {
+            // 1. Sembunyikan tombol
+            document.getElementById('start-screen').style.display = 'none';
+            
+            // 2. Tampilkan kejutan
+            const surprise = document.getElementById('surprise-screen');
+            surprise.style.display = 'flex';
+            
+            // Sedikit delay agar transisi halus
+            setTimeout(() => {
+                surprise.style.opacity = '1';
+            }, 100);
+
+            // 3. Putar Musik
+            const music = document.getElementById('bg-music');
+            music.volume = 0.5; // Set volume 50%
+            music.play().catch(error => {
+                console.log("Browser memblokir autoplay, user harus interaksi dulu.");
+            });
+
+            // 4. Mulai efek hati berterbangan
+            setInterval(createHeart, 300);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            
+            // Posisi acak
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+            
+            // Durasi animasi acak
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            
+            document.body.appendChild(heart);
+
+            // Hapus hati setelah animasi selesai agar tidak memberatkan browser
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
